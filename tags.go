@@ -27,7 +27,7 @@ func NewTags(tags []Tag) Tags {
 }
 
 // Count returns the count in tags
-func (tags Tags) Count() int {
+func (tags *Tags) Count() int {
 	return len(tags.Map)
 }
 
@@ -42,14 +42,14 @@ func (tags *Tags) Remove(key string) {
 }
 
 // Has returns true if the tag is present
-func (tags Tags) Has(key string) bool {
+func (tags *Tags) Has(key string) bool {
 	_, ok := tags.Map[key]
 	return ok
 }
 
 // MustTag returns the value for the given tag, or panics if the
 // key is not present.
-func (tags Tags) MustTag(key string) string {
+func (tags *Tags) MustTag(key string) string {
 	v, ok := tags.Map[key]
 	if !ok {
 		panic("could not find tag: " + key)
@@ -59,7 +59,7 @@ func (tags Tags) MustTag(key string) string {
 
 // GetWithDefault gets the value for the given tag, returning dflt if
 // the key is not present.
-func (tags Tags) GetWithDefault(key, dflt string) string {
+func (tags *Tags) GetWithDefault(key, dflt string) string {
 	v, ok := tags.Map[key]
 	if !ok {
 		return dflt

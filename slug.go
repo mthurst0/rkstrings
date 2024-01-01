@@ -5,22 +5,6 @@ import (
 	"unicode"
 )
 
-func convertWithFilter(src string, filter func(rune) bool, replacement rune) string {
-	var s strings.Builder
-	for _, r := range src {
-		if filter(r) {
-			s.WriteRune(r)
-		} else {
-			s.WriteRune(replacement)
-		}
-	}
-	return s.String()
-}
-
-func ConvertToSlug(src string) string {
-	return strings.ToLower(convertWithFilter(src, IsAlphaNumeric, '-'))
-}
-
 type oneHyphenBuilder struct {
 	wrapped     strings.Builder
 	writeHyphen bool
@@ -73,18 +57,16 @@ func slugIt(preserveRune func(r rune) bool, s string) string {
 	return b.String()
 }
 
-// PathSlug translates s into a path string in slug form.
+// ToPathSlug translates s into a path string in slug form.
 // Where a slug string is all lowercase, with special characters
 // replaced by hyphens ('-').
-func PathSlug(s string) string {
+func ToPathSlug(s string) string {
 	return slugIt(func(r rune) bool {
 		return r == '/' || r == '\\' || r == '.' || unicode.IsNumber(r)
 	}, s)
 }
 
-// FullSlug removes all special characters other than '-'
-func FullSlug(s string) string {
-	return slugIt(func(r rune) bool {
-		return unicode.IsNumber(r)
-	}, s)
+// ToSlug removes all special characters other than '-'
+func ToSlug(s string) string {
+	return slugIt(func(r rune) bool { return false }, s)
 }

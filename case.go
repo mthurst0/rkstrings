@@ -47,13 +47,15 @@ func (b *backItUpOneBuilder) String() string {
 	return b.sb.String()
 }
 
-func ConvertCamelCase(in string, delim rune) string {
+// convertFromCamelCase converts a camelCase string to a delimited string.
+// The delimiter is specified by the delim parameter.
+func convertFromCamelCase(s string, delim rune) string {
 	var newName backItUpOneBuilder
 	upperSequenceLen := 0
 	var lastUpperRune rune
-	for ii, elem := range in {
+	for i, elem := range s {
 		if IsUpperRune(elem) {
-			if ii != 0 && upperSequenceLen == 0 {
+			if i != 0 && upperSequenceLen == 0 {
 				newName.WriteRune(delim)
 			}
 			upperSequenceLen++
@@ -70,4 +72,42 @@ func ConvertCamelCase(in string, delim rune) string {
 		}
 	}
 	return newName.String()
+}
+
+func ToSnakeCase(in string) string {
+	return convertFromCamelCase(in, '_')
+}
+
+func IsLowerRune(r rune) bool {
+	return unicode.IsLower(r) && unicode.IsLetter(r)
+}
+
+func IsUpperRune(r rune) bool {
+	return unicode.IsUpper(r) && unicode.IsLetter(r)
+}
+
+func IsLowerCase(s string) bool {
+	for _, c := range s {
+		if !IsLowerRune(c) {
+			return false
+		}
+	}
+	return true
+}
+
+func IsUpperCase(s string) bool {
+	for _, c := range s {
+		if !IsUpperRune(c) {
+			return false
+		}
+	}
+	return true
+}
+
+func LowerCaseFirst(in string) string {
+	return strings.ToLower(in[0:1]) + in[1:]
+}
+
+func UpperCaseFirst(in string) string {
+	return strings.ToUpper(in[0:1]) + in[1:]
 }

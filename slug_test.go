@@ -6,12 +6,18 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestConvert(t *testing.T) {
-	assert.Equal(t, "h-.b", PathSlug("-H--.-b"))
-	assert.Equal(t, "h-o", PathSlug(" h o"))
-	assert.Equal(t, "who-is/this-and-that", PathSlug("Who is/ThisAndThat"))
-	assert.Equal(t, "who", PathSlug("WHO"))
-	assert.Equal(t, "foo.m4a", PathSlug("Foo.m4a"))
-	assert.Equal(t, "h-b", PathSlug("h--b"))
-	assert.Equal(t, "h-b", PathSlug("h---b"))
+func TestToPathSlug(t *testing.T) {
+	assert.Equal(t, "h-.b", ToPathSlug("-H--.-b"))
+	assert.Equal(t, "h-o", ToPathSlug(" h o"))
+	assert.Equal(t, "who-is/this-and-that", ToPathSlug("Who is/ThisAndThat"))
+	assert.Equal(t, "who", ToPathSlug("WHO"))
+	assert.Equal(t, "foo.m4a", ToPathSlug("Foo.m4a"))
+	assert.Equal(t, "h-b", ToPathSlug("h--b"))
+	assert.Equal(t, "h-b", ToPathSlug("h---b"))
+}
+
+func TestToSlug(t *testing.T) {
+	assert.Equal(t, "h-b", ToSlug("-H--.-b"))
+	assert.Equal(t, "h-b", ToSlug("--H--.-b"))
+	assert.Equal(t, "h-b", ToSlug("h---b"))
 }
