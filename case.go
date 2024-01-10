@@ -78,6 +78,10 @@ func ToSnakeCase(in string) string {
 	return convertFromCamelCase(in, '_')
 }
 
+func ToDashCase(in string) string {
+	return convertFromCamelCase(in, '-')
+}
+
 func IsLowerRune(r rune) bool {
 	return unicode.IsLower(r) && unicode.IsLetter(r)
 }
