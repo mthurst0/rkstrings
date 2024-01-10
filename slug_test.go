@@ -14,6 +14,7 @@ func TestToPathSlug(t *testing.T) {
 	assert.Equal(t, "foo.m4a", ToPathSlug("Foo.m4a"))
 	assert.Equal(t, "h-b", ToPathSlug("h--b"))
 	assert.Equal(t, "h-b", ToPathSlug("h---b"))
+	assert.Equal(t, "foo2", ToPathSlug("foo2"))
 }
 
 func TestToSlug(t *testing.T) {
