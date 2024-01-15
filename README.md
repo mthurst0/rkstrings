@@ -1,3 +1,3 @@
 # rkstrings
 
-Got strings that need wrangling? Rye Knot
+String functions for `go`

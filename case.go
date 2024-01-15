@@ -5,10 +5,12 @@ import (
 	"unicode"
 )
 
+// ToCamelCaseLowercaseFirst converts a string to camelCase.
 func ToCamelCaseLowercaseFirst(in string) string {
 	return LowerCaseFirst(ToCamelCase(in))
 }
 
+// ToCamelCase converts a string to CamelCase.
 func ToCamelCase(in string) string {
 	var newName strings.Builder
 	camelNext := true
@@ -25,24 +27,24 @@ func ToCamelCase(in string) string {
 	return newName.String()
 }
 
-// backItUpOneBuilder wraps a strings.Builder that can back up one rune.
-type backItUpOneBuilder struct {
+// backUpOneBuilder wraps a strings.Builder that can back up one rune.
+type backUpOneBuilder struct {
 	sb       strings.Builder
 	lastRune rune
 }
 
-func (b *backItUpOneBuilder) WriteRune(r rune) {
+func (b *backUpOneBuilder) WriteRune(r rune) {
 	if b.lastRune != 0 {
 		b.sb.WriteRune(b.lastRune)
 	}
 	b.lastRune = r
 }
 
-func (b *backItUpOneBuilder) BackItUp() {
+func (b *backUpOneBuilder) BackItUp() {
 	b.lastRune = 0
 }
 
-func (b *backItUpOneBuilder) String() string {
+func (b *backUpOneBuilder) String() string {
 	b.sb.WriteRune(b.lastRune)
 	return b.sb.String()
 }
@@ -50,7 +52,7 @@ func (b *backItUpOneBuilder) String() string {
 // convertFromCamelCase converts a camelCase string to a delimited string.
 // The delimiter is specified by the delim parameter.
 func convertFromCamelCase(s string, delim rune) string {
-	var newName backItUpOneBuilder
+	var newName backUpOneBuilder
 	upperSequenceLen := 0
 	var lastUpperRune rune
 	for i, elem := range s {
@@ -74,22 +76,27 @@ func convertFromCamelCase(s string, delim rune) string {
 	return newName.String()
 }
 
+// ToSnakeCase converts a string to snake_case.
 func ToSnakeCase(in string) string {
-	return convertFromCamelCase(in, '_')
+	return convertFromCamelCase(ToCamelCase(in), '_')
 }
 
+// ToDashCase converts a string to dash-case.
 func ToDashCase(in string) string {
-	return convertFromCamelCase(in, '-')
+	return convertFromCamelCase(ToCamelCase(in), '-')
 }
 
+// IsLowerRune returns true if the rune is a letter and is lower case.
 func IsLowerRune(r rune) bool {
 	return unicode.IsLower(r) && unicode.IsLetter(r)
 }
 
+// IsUpperRune returns true if the rune is a letter and is upper case.
 func IsUpperRune(r rune) bool {
 	return unicode.IsUpper(r) && unicode.IsLetter(r)
 }
 
+// IsLowerCase returns true if the string is all lower case letters.
 func IsLowerCase(s string) bool {
 	for _, c := range s {
 		if !IsLowerRune(c) {
@@ -99,6 +106,7 @@ func IsLowerCase(s string) bool {
 	return true
 }
 
+// IsUpperCase returns true if the string is all upper case letters.
 func IsUpperCase(s string) bool {
 	for _, c := range s {
 		if !IsUpperRune(c) {
@@ -108,10 +116,12 @@ func IsUpperCase(s string) bool {
 	return true
 }
 
+// LowerCaseFirst returns the string with the first letter lower cased.
 func LowerCaseFirst(in string) string {
 	return strings.ToLower(in[0:1]) + in[1:]
 }
 
+// UpperCaseFirst returns the string with the first letter upper cased.
 func UpperCaseFirst(in string) string {
 	return strings.ToUpper(in[0:1]) + in[1:]
 }

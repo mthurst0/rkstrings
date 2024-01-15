@@ -14,6 +14,13 @@ func TestToCamelCase(t *testing.T) {
 func TestSnakeCase(t *testing.T) {
 	assert.Equal(t, "foo_url_ref", ToSnakeCase("FooURLRef"))
 	assert.Equal(t, "foo_id", ToSnakeCase("fooID"))
+	assert.Equal(t, "foo_id", ToSnakeCase("Foo-ID"))
+}
+
+func TestToDashCase(t *testing.T) {
+	assert.Equal(t, "foo-url-ref", ToDashCase("FooURLRef"))
+	assert.Equal(t, "foo-id", ToDashCase("fooID"))
+	assert.Equal(t, "foo-id", ToDashCase("Foo-ID"))
 }
 
 func TestIsLowerCase(t *testing.T) {
