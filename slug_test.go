@@ -22,3 +22,8 @@ func TestToSlug(t *testing.T) {
 	assert.Equal(t, "h-b", ToSlug("--H--.-b"))
 	assert.Equal(t, "h-b", ToSlug("h---b"))
 }
+
+func TestSlugify(t *testing.T) {
+	assert.Equal(t, "h-b", Slugify("-H1-.-b9", func(r rune) bool { return false }))
+	assert.Equal(t, "h1-b9", Slugify("--H1-.-b9", func(r rune) bool { return r >= '0' && r <= '9' }))
+}
