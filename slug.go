@@ -54,7 +54,7 @@ func slugIt(preserveRune func(r rune) bool, s string) string {
 			upperCase = false
 		}
 	}
-	return b.String()
+	return strings.Trim(b.String(), "-")
 }
 
 // ToPathSlug translates s into a path string in slug form.
@@ -69,4 +69,10 @@ func ToPathSlug(s string) string {
 // ToSlug removes all special characters other than '-'
 func ToSlug(s string) string {
 	return slugIt(func(r rune) bool { return false }, s)
+}
+
+// Slugify returns a slugified version of the input string. The function f
+// should return true for runes that should be preserved in the output.
+func Slugify(s string, f func(r rune) bool) string {
+	return slugIt(f, s)
 }
